@@ -71,6 +71,76 @@ async function displayPopularTVShows() {
   });
 }
 
+//Display show details
+async function displayTVShowDetails() {
+  const tvShowId = window.location.search.split("?")[1];
+
+  const tvShow = await fetchAPIData(`tv/${tvShowId}`);
+  displayBackgroundImage("tvShow", tvShow.backdrop_path);
+
+  const div = document.createElement("div");
+  div.innerHTML = `
+  <div class="details-top">
+          <div>
+          ${
+            tvShow.poster_path
+              ? `<img
+                src="https://image.tmdb.org/t/p/w500${tvShow.poster_path}"
+                class="card-img-top"
+                alt="${tvShow.name}"
+              />
+              `
+              : `<img
+              src="./images/no-image.jpg"
+              class="card-img-top"
+              alt="${tvShow.name}"
+            />
+              `
+          }
+          </div>
+          <div>
+            <h2>${tvShow.name}</h2>
+            <p>
+              <i class="fas fa-star text-primary"></i>
+              ${tvShow.vote_average.toFixed(1)} / 10
+            </p>
+            <p class="text-muted">Release Date: ${tvShow.first_air_date}</p>
+            <p>
+              ${tvShow.overview}
+            </p>
+            <h5>Genres</h5>
+            <ul class="list-group">
+              ${tvShow.genres.map((genre) => `<li>${genre.name}</li>`).join("")}
+            </ul>
+            <a href="${
+              tvShow.homepage
+            }" target="_blank" class="btn">Visit Show Homepage</a>
+          </div>
+        </div>
+        <div class="details-bottom">
+          <h2>Show Info</h2>
+          <ul>
+            <li><span class="text-secondary">Number Of Episodes:</span> ${addCommasToNumber(
+              tvShow.number_of_episodes
+            )}</li>
+            <li>
+              <span class="text-secondary">Last Episode To Air:</span> ${
+                tvShow.last_episode_to_air.name
+              }
+            </li>
+            <li><span class="text-secondary">Status:</span> ${
+              tvShow.status
+            }</li>
+          </ul>
+          <h4>Production Companies</h4>
+          <div class="list-group">${tvShow.production_companies
+            .map((company) => `${company.name}`)
+            .join(", ")}</div>
+        </div>
+  `;
+  document.querySelector("#show-details").appendChild(div);
+}
+
 //Display movie details
 async function displayMovieDetails() {
   const movieId = window.location.search.split("=")[1];
@@ -214,7 +284,7 @@ function init() {
       displayMovieDetails();
       break;
     case "/tv-details.html":
-      console.log("TV Details");
+      displayTVShowDetails();
       break;
     case "/search.html":
       console.log("Search");
