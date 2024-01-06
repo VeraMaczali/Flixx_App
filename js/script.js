@@ -388,7 +388,7 @@ function initSwiper() {
     loop: true,
     autoplay: {
       delay: 4000,
-      disableOnInteraction: true,
+      disableOnInteraction: false,
     },
     breakpoints: {
       500: {

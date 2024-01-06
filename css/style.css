@@ -345,6 +345,9 @@ section h2 {
   .details-top {
     flex-direction: column;
   }
+  .details-top img {
+    max-width: 95%;
+  }
   #movie-details * {
     margin-left: auto;
     margin-right: auto;
