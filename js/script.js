@@ -384,11 +384,11 @@ function initSwiper() {
   const swiper = new Swiper(".swiper", {
     slidesPerView: 1,
     spaceBetween: 30,
-    freeMode: true,
+    freeMode: false,
     loop: true,
     autoplay: {
       delay: 4000,
-      disableOnInteraction: false,
+      disableOnInteraction: true,
     },
     breakpoints: {
       500: {
